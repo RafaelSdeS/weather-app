@@ -1,3 +1,6 @@
+# Ignore config folder
+/config/
+
 # Logs
 logs
 *.log
