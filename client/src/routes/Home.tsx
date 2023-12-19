@@ -14,7 +14,9 @@ function Home() {
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
+        console.log(user)
         if (user) {
+          console.log(user)
           const token = await user.getIdToken()
           const response = await fetch(
             `http://localhost:5000/api/weather/${cityName}`,
@@ -27,14 +29,15 @@ function Home() {
           const data: WeatherData = await response.json()
           setWeatherData(data)
         } else {
-          console.log('Error: User not logged in') // Handle the case when the user is not logged in
+          console.log('User not logged in')
         }
       } catch (error) {
         console.log('Error:', error)
       }
     }
-
-    fetchWeatherData()
+    if (user) {
+      fetchWeatherData()
+    }
   }, [cityName, user])
 
   return (
@@ -45,7 +48,7 @@ function Home() {
             <h1>{weatherData.location.name}</h1>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-slate-500 rounded-xl">
+            <div className="bg-gray-200  rounded-xl">
               <h1 className="py-5">{weatherData.current.last_updated}</h1>
               <div className="flex flex-col items-center">
                 <img
@@ -71,7 +74,7 @@ function Home() {
           </div>
         </div>
       ) : (
-        <p>Loading weather data... </p>
+        <p>Loading weather data...</p>
       )}
     </div>
   )

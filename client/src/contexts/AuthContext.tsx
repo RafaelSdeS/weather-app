@@ -1,4 +1,6 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react'
+import { onAuthStateChanged, User } from 'firebase/auth'
+import { auth } from '../firebase-config'
 
 interface AuthProviderProps {
   children: ReactNode
@@ -7,23 +9,21 @@ interface AuthProviderProps {
 export const AuthContext = createContext<any>(null)
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
-    const loggedInUser = localStorage.getItem('user')
-    if (loggedInUser) {
-      setUser(JSON.parse(loggedInUser))
-    }
+    const unsubscribe = onAuthStateChanged(auth, currentUser => {
+      if (currentUser) {
+        setUser(currentUser)
+      } else {
+        setUser(null)
+      }
+    })
+
+    return () => unsubscribe() 
   }, [])
 
-  const updateUser = (user: any) => {
-    setUser(user)
-    localStorage.setItem('user', JSON.stringify(user))
-  }
-
   return (
-    <AuthContext.Provider value={{ user, updateUser }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
   )
 }

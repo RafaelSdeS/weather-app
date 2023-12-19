@@ -4,7 +4,7 @@ import { auth } from '../firebase-config'
 import { AuthContext } from '../contexts/AuthContext'
 
 const Login: React.FC = () => {
-  const { user, updateUser } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -32,7 +32,6 @@ const Login: React.FC = () => {
         password
       )
       const currentUser = userCredential.user
-      updateUser(currentUser) // Update user context after successful login
       setError('')
       console.log(currentUser) // Log the user object after successful login
     } catch (err: any) {

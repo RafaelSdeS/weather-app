@@ -1,35 +1,45 @@
 function About() {
   return (
-    <div className='bg-slate-400 row-span-2 col-span-4 h-[75vh] flex flex-col text-center rounded-xl p-10 mr-4'>
-      <div className= "my-3">
-      <h1 className="font-bold">About this project</h1>
-      <p>An app should be self explanatory and shouldn't need instructions, 
-        but I want to explain how everything works and the technologies I've chosen.</p>
-        <p>This project was made to practice and improve my abilities with React, Tailwind 
-          and some other techs, like React Router, Node, MongoDB and APIs
+    <div className="bg-gray-200 p-6 rounded-xl lg:max-w-screen-lg mx-auto col-span-5 lg:col-span-4 lg:col-start-2">
+      <section className="mb-8">
+        <h1 className="text-2xl font-bold mb-4">About this project</h1>
+        <p className="text-lg">
+          An app should be intuitive, but here I'll explain its workings and the
+          technologies used.
         </p>
-      </div>
-      <div className="flex flex-row justify-center my-3">
+        <p className="text-lg">
+          This project serves as a platform to enhance my skills in React,
+          Tailwind, React Router, Node.js, Firebase, and APIs.
+        </p>
+      </section>
+      <section>
+        <h1 className="text-2xl font-bold mb-4">How this app works</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <h1 className="font-bold">FrontEnd</h1>
-            <p>React</p>
-            <p>Tailwind</p>
-            <p>Vite</p>
+            <h2 className="text-lg font-semibold">Page Navigation</h2>
+            <p className="text-base">
+              Utilizing React Router for seamless page transitions.
+            </p>
           </div>
           <div>
-            <h1 className="font-bold">BackEnd</h1>
-            <p>NodeJs</p>
-            <p>MongoDB</p>
-            <p>OpenWeather API</p>
+            <h2 className="text-lg font-semibold">Styling</h2>
+            <p className="text-base">All styles crafted using Tailwind CSS.</p>
           </div>
-      </div>
-      <div className="my-3">
-          <h1 className="font-bold">How to use this app</h1>
-          <p>I use react Router to make the navigation</p>
-          <p>The styles are all from Tailwind</p>
-          <p>With Node I fetch the data from the OpenWeather Api</p>
-          <p>MongoDB stores the locations</p>
-      </div>
+          <div>
+            <h2 className="text-lg font-semibold">Data Handling</h2>
+            <p className="text-base">
+              Fetching data from the OpenWeather API and implementing user
+              verification via Node.js.
+            </p>
+          </div>
+          <div>
+            <h2 className="text-lg font-semibold">Database</h2>
+            <p className="text-base">
+              Firebase was chosen as the database for its simplicity and speed.
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }
