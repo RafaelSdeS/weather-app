@@ -2,8 +2,10 @@ import React, { useState, useContext, ChangeEvent, FormEvent } from 'react'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../firebase-config'
 import { AuthContext } from '../contexts/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 const Login: React.FC = () => {
+  const navigate = useNavigate()
   const { user } = useContext(AuthContext)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -33,7 +35,12 @@ const Login: React.FC = () => {
       )
       const currentUser = userCredential.user
       setError('')
-      console.log(currentUser) // Log the user object after successful login
+      console.log(currentUser)
+
+      setEmail('')
+      setPassword('')
+
+      navigate('/')
     } catch (err: any) {
       setError(err.message)
     }
@@ -91,15 +98,6 @@ const Login: React.FC = () => {
         </form>
         {error && (
           <div className="text-red-500 text-sm text-center mt-4">{error}</div>
-        )}
-        {user && (
-          <div>
-            {/* Display user information */}
-            <h3>User Information:</h3>
-            <p>Email: {user.email}</p>
-            <p>UID: {user.uid}</p>
-            {/* Add other user data if needed */}
-          </div>
         )}
       </div>
     </div>

@@ -14,18 +14,13 @@ function Home() {
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
-        console.log(user)
         if (user) {
-          console.log(user)
           const token = await user.getIdToken()
-          const response = await fetch(
-            `http://localhost:5000/api/weather/${cityName}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          )
+          const response = await fetch(`http://localhost:5000/${cityName}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
           const data: WeatherData = await response.json()
           setWeatherData(data)
         } else {
