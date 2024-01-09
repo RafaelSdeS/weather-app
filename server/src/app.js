@@ -15,7 +15,7 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 })
 
-app.use('/', verifyToken, weatherRoutes)
+app.use('/', weatherRoutes)
 
 const port = process.env.PORT || 5000
 

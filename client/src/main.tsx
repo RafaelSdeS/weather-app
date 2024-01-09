@@ -9,6 +9,7 @@ import About from './routes/About.tsx'
 import Register from './routes/Register.tsx'
 import Login from './routes/Login.tsx'
 import { AuthProvider } from './contexts/AuthContext.tsx'
+import Profile from './routes/Profile.tsx'
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: '/about',
         element: <About />,
+      },
+      {
+        path: '/profile',
+        element: <Profile />,
       },
     ],
   },

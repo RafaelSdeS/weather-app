@@ -30,13 +30,25 @@ function processWeatherData(data) {
   const forecastData = forecastday.map(day => {
     const {
       date,
-      day: { maxtemp_c, mintemp_c, condition },
+      day: {
+        maxtemp_c,
+        mintemp_c,
+        maxwind_kph,
+        totalprecip_mm,
+        avghumidity,
+        daily_chance_of_rain,
+        condition,
+      },
     } = day
 
     return {
       date,
       maxtemp_c,
       mintemp_c,
+      maxwind_kph,
+      totalprecip_mm,
+      avghumidity,
+      daily_chance_of_rain,
       condition,
     }
   })

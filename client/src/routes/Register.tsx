@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../firebase-config'
+import { auth, database } from '../firebase-config'
+import { ref, set } from 'firebase/database'
 import { useNavigate } from 'react-router-dom'
 
 const Register = () => {
@@ -10,14 +11,31 @@ const Register = () => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
 
+  const defaultProfileImage = '../assets/profile.svg'
+  const defaultLocations = ['London', 'Washington', 'Paris', 'Rio de Janeiro']
+
   const handleRegistration = async (e: any) => {
     e.preventDefault()
     try {
-      await createUserWithEmailAndPassword(auth, email, password)
-      setError('')
-      setEmail('')
-      setPassword('')
-      navigate('/login')
+      const result = await createUserWithEmailAndPassword(auth, email, password)
+      const user = result.user
+      if (user) {
+        set(ref(database, 'users/' + user.uid), {
+          email: email,
+          uid: user.uid,
+          profile_picture: defaultProfileImage,
+          locations: defaultLocations,
+        })
+          .then(() => {
+            setError('')
+            setEmail('')
+            setPassword('')
+            navigate('/login')
+          })
+          .catch(error => {
+            setError(error.message)
+          })
+      }
     } catch (err: any) {
       setError(err.message)
     }

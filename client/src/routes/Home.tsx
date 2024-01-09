@@ -38,35 +38,29 @@ function Home() {
   return (
     <div className="row-span-2 col-span-4 flex flex-col text-center mr-4">
       {weatherData ? (
-        <div>
-          <div className="mx-auto my-2 p-3 rounded-xl">
-            <h1>{weatherData.location.name}</h1>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-gray-200  rounded-xl">
-              <h1 className="py-5">{weatherData.current.last_updated}</h1>
-              <div className="flex flex-col items-center">
-                <img
-                  src={weatherData.current.condition.icon}
-                  alt="Tempo para hoje"
-                  className="pb-5 h-40"
-                />
-                <div className="grid grid-cols-2 mt-5 items-start mx-auto">
-                  <p>{weatherData.current.condition.text}</p>
-                  <p>Temperature {weatherData.current.temp_c}°C</p>
-                  <p>Humidity: {weatherData.current.humidity}%</p>
-                  <p>Wind: {weatherData.current.wind_kph}Kph</p>
-                  <p>Precipitation: {weatherData.current.precip_mm}mm</p>
-                  <p>Clouds: {weatherData.current.cloud}%</p>
-                </div>
-              </div>
+        <div className="min-h-screen bg-gray-100 flex flex-col items-center ">
+          <main className="flex flex-col items-center justify-center space-y-4">
+            <div className="relative group w-1/2">
+              <h1 className="text-4xl font-bold text-gray-900">
+                {weatherData.location.name}
+              </h1>
+              <p className="absolute top-full left-0 right-0 text-xs text-gray-500">
+                Updated at{' '}
+                {new Date(weatherData.current.last_updated).getDate() +
+                  '/' +
+                  (new Date(weatherData.current.last_updated).getMonth() + 1) +
+                  '/' +
+                  new Date(weatherData.current.last_updated).getFullYear()}{' '}
+                {new Date(weatherData.current.last_updated).getHours()} :
+                {new Date(weatherData.current.last_updated).getMinutes()}
+              </p>
             </div>
-            <div className="rounded-xl">
-              {weatherData.forecast.map(forecast => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {weatherData.forecast.slice(0, 3).map(forecast => (
                 <ForecastCard key={forecast.date_epoch} forecast={forecast} />
               ))}
             </div>
-          </div>
+          </main>
         </div>
       ) : (
         <p>Loading weather data...</p>

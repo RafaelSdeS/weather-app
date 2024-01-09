@@ -5,7 +5,7 @@ import fiverr from '../assets/fiverr.svg'
 
 function Contact() {
   return (
-    <div className="bg-gray-200 row-span-2 col-span-4 h-[75vh] flex flex-col text-center rounded-xl mr-4">
+    <div className="bg-gray-100 row-span-2 col-span-4 h-[75vh] flex flex-col text-center rounded-xl mr-4">
       <div className="mx-auto my-5">
         <h1 className="font-bold">
           Feel free to contact me and see my work and other projects

@@ -1,12 +1,11 @@
-import React, { useState, useContext, ChangeEvent, FormEvent } from 'react'
+import React, { useState, ChangeEvent, FormEvent } from 'react'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../firebase-config'
-import { AuthContext } from '../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import { FirebaseError } from 'firebase/app'
 
 const Login: React.FC = () => {
   const navigate = useNavigate()
-  const { user } = useContext(AuthContext)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -41,8 +40,10 @@ const Login: React.FC = () => {
       setPassword('')
 
       navigate('/')
-    } catch (err: any) {
-      setError(err.message)
+    } catch (err: unknown) {
+      if (err instanceof FirebaseError) {
+        setError(err.message)
+      }
     }
   }
 

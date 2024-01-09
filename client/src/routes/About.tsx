@@ -1,6 +1,6 @@
 function About() {
   return (
-    <div className="bg-gray-200 p-6 rounded-xl lg:max-w-screen-lg mx-auto col-span-5 lg:col-span-4 lg:col-start-2">
+    <div className="bg-gray-100 p-6 rounded-xl lg:max-w-screen-lg mx-auto col-span-5 lg:col-span-4 lg:col-start-2">
       <section className="mb-8">
         <h1 className="text-2xl font-bold mb-4">About this project</h1>
         <p className="text-lg">
