@@ -14,7 +14,7 @@ function SideBar() {
   const [cityName, setCityName] = useState<string>('')
   const [searchTerm, setSearchTerm] = useState('')
   const [matchingCities, setMatchingCities] = useState<string[]>([])
-  const [actualCity, setActualCity] = useState<string>('');
+  const [actualCity, setActualCity] = useState<string>('')
 
   useEffect(() => {
     if (user) {
@@ -248,7 +248,11 @@ function SideBar() {
 
   useEffect(() => {
     const fetchCity = async () => {
-      const response = await fetch('https://api.ipgeolocation.io/ipgeo?apiKey=40e5537684b9400c8f9dc850a379cd38&fields=city')
+      const response = await fetch(
+        `https://api.ipgeolocation.io/ipgeo?apiKey=${
+          import.meta.env.VITE_GEOAPI_KEY
+        }&fields=city`
+      )
       const cityData = await response.json()
       setActualCity(cityData.city)
     }
@@ -320,13 +324,13 @@ function SideBar() {
           ))}
         </ul>
         <div className="flex justify-between items-center">
-        <button
-          onClick={logout}
-          className="py-2 px-4 text-base bg-red-500 hover:bg-red-700 text-white font-bold rounded"
-        >
-          Logout
-        </button>
-      </div>
+          <button
+            onClick={logout}
+            className="py-2 px-4 text-base bg-red-500 hover:bg-red-700 text-white font-bold rounded"
+          >
+            Logout
+          </button>
+        </div>
       </div>
     </div>
   )
