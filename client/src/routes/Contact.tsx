@@ -7,7 +7,7 @@ function Contact() {
   return (
     <div className="bg-gray-100 row-span-2 col-span-4 h-[75vh] flex flex-col text-center rounded-xl mr-4">
       <div className="mx-auto my-5">
-        <h1 className="font-bold">
+        <h1 className="text-2xl font-bold mb-4">
           Feel free to contact me and see my work and other projects
         </h1>
       </div>
@@ -25,7 +25,7 @@ function Contact() {
           <a href="https://www.linkedin.com/in/rafael-silva-de-souza">
             <img
               src={linkedin}
-              alt=""
+              alt="LinkedIn"
               className="h-20 md:h-24 lg:h-32 w-20 md:w-24 lg:w-32"
             />
           </a>
@@ -34,7 +34,7 @@ function Contact() {
           <a href="https://www.instagram.com/rafael.sdesouza/">
             <img
               src={instagram}
-              alt=""
+              alt="Instagram"
               className="h-20 md:h-24 lg:h-32 w-20 md:w-24 lg:w-32"
             />
           </a>
@@ -43,7 +43,7 @@ function Contact() {
           <a href="https://br.fiverr.com/rafaelsdesouza?up_rollout=true">
             <img
               src={fiverr}
-              alt=""
+              alt="Fiverr"
               className="h-20 md:h-24 lg:h-32 w-20 md:w-24 lg:w-32"
             />
           </a>

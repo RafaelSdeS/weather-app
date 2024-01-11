@@ -10,6 +10,7 @@ import Register from './routes/Register.tsx'
 import Login from './routes/Login.tsx'
 import { AuthProvider } from './contexts/AuthContext.tsx'
 import Profile from './routes/Profile.tsx'
+import ErrorPage from './routes/ErrorPage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: '/profile',
         element: <Profile />,
+      },
+      {
+        path: '/error',
+        element: <ErrorPage />,
       },
     ],
   },

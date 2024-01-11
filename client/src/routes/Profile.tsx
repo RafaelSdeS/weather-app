@@ -1,22 +1,34 @@
 import { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Editable from '../components/Editable'
 import { AuthContext } from '../contexts/AuthContext'
-import { ref, onValue, set } from 'firebase/database'
+import { ref as databaseRef, onValue, set } from 'firebase/database'
 import { database } from '../firebase-config'
 import { UserData } from '../types/userTypes'
+import { storage } from '../firebase-config'
+import {
+  ref as storageRef,
+  uploadBytesResumable,
+  getDownloadURL,
+} from 'firebase/storage'
+import profile from '../assets/profile.svg'
 
 function Profile() {
   const { user } = useContext(AuthContext)
   const [userData, setUserData] = useState<UserData | null>(null)
 
+  const navigate = useNavigate()
+
   useEffect(() => {
-    if (user) {
-      const userRef = ref(database, 'users/' + user.uid)
+    if (!user) {
+      navigate('/error')
+    } else {
+      const userRef = databaseRef(database, 'users/' + user.uid)
       onValue(userRef, snapshot => {
         setUserData(snapshot.val() as UserData)
       })
     }
-  }, [user])
+  }, [user, navigate])
 
   const handleUpdateLocation = (newLocation: string, index: number) => {
     if (userData) {
@@ -28,7 +40,7 @@ function Profile() {
 
   const handleUpdateLocations = async () => {
     if (userData && user) {
-      set(ref(database, 'users/' + user.uid), {
+      set(databaseRef(database, 'users/' + user.uid), {
         ...userData,
         locations: userData.locations,
       })
@@ -38,21 +50,67 @@ function Profile() {
         .catch(error => {
           console.error('Failed to update locations: ', error)
         })
+    } else {
+      console.error('Cannot update locations: userData or user is null')
     }
   }
+
+  const handleImageClick = () => {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = 'image/*'
+    input.onchange = e => {
+      const file = (e.target as HTMLInputElement)?.files?.[0]
+      if (file && userData) {
+        const imagesRef = storageRef(storage, `profilePictures/${file.name}`)
+        const uploadTask = uploadBytesResumable(imagesRef, file)
+
+        uploadTask.on(
+          'state_changed',
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          snapshot => {}, // This is intentional
+          error => {
+            console.error('Upload failed:', error)
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+              // Update the user's data in the database
+              set(databaseRef(database, 'users/' + user.uid), {
+                ...userData,
+                profile_picture: downloadURL,
+              })
+                .then(() => {
+                  // Update the local state
+                  setUserData({ ...userData, profile_picture: downloadURL })
+                })
+                .catch(error => {
+                  console.error('Failed to update user data: ', error)
+                })
+            })
+          }
+        )
+      }
+    }
+    input.click()
+  }
+
+  console.log(userData?.profile_picture)
 
   return (
     <div className="bg-gray-100 row-span-2 col-span-4 flex flex-col text-center mr-4">
       {userData ? (
         <div>
-          <div className="mx-auto my-2 p-3 rounded-xl">
-            <h1>{userData.email}</h1>
-            <img
-              src={userData.profile_picture}
-              alt="Profile"
-              className="pb-5 h-40"
-            />
-            <p>Locations:</p>
+          <div className="mx-auto my-2 p-3  rounded-xl">
+            <h1 className="text-lg sm:text-2xl">{userData.email}</h1>
+            <div>
+              <img
+                src={userData.profile_picture || profile}
+                alt="Profile"
+                className="my-5 h-20 w-20 mx-auto rounded-full cursor-pointer"
+                onClick={handleImageClick}
+              />
+            </div>
+            <h1 className="text-lg sm:text-2xl">Locations:</h1>
             {userData.locations.map((location, index) => (
               <div key={index}>
                 <Editable
@@ -63,7 +121,12 @@ function Profile() {
                 />
               </div>
             ))}
-            <button onClick={handleUpdateLocations}>Save Changes</button>
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={handleUpdateLocations}
+            >
+              Save Changes
+            </button>{' '}
           </div>
         </div>
       ) : (

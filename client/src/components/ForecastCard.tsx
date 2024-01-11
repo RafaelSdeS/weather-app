@@ -17,7 +17,7 @@ function ForecastCard({ forecast }: ForecastCardProps) {
   } = forecast
 
   return (
-    <div className="bg-white shadow rounded-lg overflow-hidden">
+    <div className="bg-white shadow rounded-lg overflow-hidden mt-12">
       <div className="px-4 py-5 sm:p-6">
         <img src={condition.icon} alt="" className="h-10 w-10 mx-auto" />
         <h3 className="text-lg leading-6 font-medium text-gray-900 mt-2">

@@ -20,7 +20,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     })
 
-    return () => unsubscribe() 
+    return () => unsubscribe()
   }, [])
 
   return (

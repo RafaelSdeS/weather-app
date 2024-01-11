@@ -27,15 +27,8 @@ const Login: React.FC = () => {
         return
       }
 
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      )
-      const currentUser = userCredential.user
+      await signInWithEmailAndPassword(auth, email, password)
       setError('')
-      console.log(currentUser)
-
       setEmail('')
       setPassword('')
 
@@ -48,7 +41,8 @@ const Login: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <h1 className="text-2xl font-bold mb-4">Weather App</h1>
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="text-center text-3xl font-extrabold text-gray-900">

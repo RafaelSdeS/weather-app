@@ -15,7 +15,7 @@ const Header = () => {
         </li>
         <li>
           <p className="hover:text-gray-200">
-            <Link to="/about">About this app</Link>
+            <Link to="/about">About</Link>
           </p>
         </li>
         <li>

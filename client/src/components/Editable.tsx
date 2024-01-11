@@ -22,15 +22,23 @@ const Editable: React.FC<EditableProps> = ({ text, onChange }) => {
     setCurrentText(e.target.value)
   }
 
-  return isEditing ? (
-    <input
-      type="text"
-      value={currentText}
-      onChange={handleChange}
-      onBlur={handleBlur}
-    />
-  ) : (
-    <span onClick={handleClick}>{text}</span>
+  return (
+    <div
+      className="border-2 border-gray-300 bg-white p-2 rounded-md w-1/2 mx-auto my-1 cursor-pointer"
+      onClick={handleClick}
+    >
+      {isEditing ? (
+        <input
+          type="text"
+          value={currentText}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className="border-2rounded-md p-2 w-full"
+        />
+      ) : (
+        <span className="hover:underline  p-2 rounded-md">{text}</span>
+      )}
+    </div>
   )
 }
 

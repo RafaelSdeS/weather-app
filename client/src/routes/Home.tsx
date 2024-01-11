@@ -40,11 +40,11 @@ function Home() {
       {weatherData ? (
         <div className="min-h-screen bg-gray-100 flex flex-col items-center ">
           <main className="flex flex-col items-center justify-center space-y-4">
-            <div className="relative group w-1/2">
+            <div className="relative group w-1/2 mt-12 flex justify-center">
               <h1 className="text-4xl font-bold text-gray-900">
                 {weatherData.location.name}
               </h1>
-              <p className="absolute top-full left-0 right-0 text-xs text-gray-500">
+              <p className="absolute top-full left-0 right-0 text-xs text-gray-500 mt-2">
                 Updated at{' '}
                 {new Date(weatherData.current.last_updated).getDate() +
                   '/' +
@@ -55,7 +55,8 @@ function Home() {
                 {new Date(weatherData.current.last_updated).getMinutes()}
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
               {weatherData.forecast.slice(0, 3).map(forecast => (
                 <ForecastCard key={forecast.date_epoch} forecast={forecast} />
               ))}
