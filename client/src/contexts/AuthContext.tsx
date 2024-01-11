@@ -6,8 +6,13 @@ interface AuthProviderProps {
   children: ReactNode
 }
 
-export const AuthContext = createContext<any>(null)
+interface AuthContextValue {
+  user: User | null
+}
 
+export const AuthContext = createContext<AuthContextValue | undefined>(
+  undefined
+)
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null)
 

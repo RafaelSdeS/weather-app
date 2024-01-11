@@ -57,8 +57,11 @@ function Home() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
-              {weatherData.forecast.slice(0, 3).map(forecast => (
-                <ForecastCard key={forecast.date_epoch} forecast={forecast} />
+              {weatherData.forecast.slice(0, 3).map((forecast, index) => (
+                <ForecastCard
+                  key={`${forecast.date_epoch}-${index}`}
+                  forecast={forecast}
+                />
               ))}
             </div>
           </main>

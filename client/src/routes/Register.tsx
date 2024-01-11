@@ -11,10 +11,9 @@ const Register = () => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
 
-  const defaultProfileImage = '../assets/profile.svg'
   const defaultLocations = ['London', 'Washington', 'Paris', 'Rio de Janeiro']
 
-  const handleRegistration = async (e: any) => {
+  const handleRegistration = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
       const result = await createUserWithEmailAndPassword(auth, email, password)
@@ -36,8 +35,10 @@ const Register = () => {
             setError(error.message)
           })
       }
-    } catch (err: any) {
-      setError(err.message)
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message)
+      }
     }
   }
 

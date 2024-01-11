@@ -67,35 +67,28 @@ function Profile() {
 
         uploadTask.on(
           'state_changed',
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          snapshot => {}, // This is intentional
-          error => {
-            console.error('Upload failed:', error)
-          },
           () => {
             getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
-              // Update the user's data in the database
               set(databaseRef(database, 'users/' + user.uid), {
                 ...userData,
                 profile_picture: downloadURL,
               })
                 .then(() => {
-                  // Update the local state
                   setUserData({ ...userData, profile_picture: downloadURL })
                 })
                 .catch(error => {
                   console.error('Failed to update user data: ', error)
                 })
             })
+          },
+          error => {
+            console.error('Upload failed:', error)
           }
         )
       }
     }
     input.click()
   }
-
-  console.log(userData?.profile_picture)
-
   return (
     <div className="bg-gray-100 row-span-2 col-span-4 flex flex-col text-center mr-4">
       {userData ? (
