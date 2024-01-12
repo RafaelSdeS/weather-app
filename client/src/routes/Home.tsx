@@ -16,11 +16,14 @@ function Home() {
       try {
         if (user) {
           const token = await user.getIdToken()
-          const response = await fetch(`http://localhost:5000/${cityName}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
+          const response = await fetch(
+            `${import.meta.env.VITE_SERVER_URL}/${cityName}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
           const data: WeatherData = await response.json()
           setWeatherData(data)
         } else {
