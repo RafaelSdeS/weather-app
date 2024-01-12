@@ -23,10 +23,12 @@ function Profile() {
     if (!user) {
       navigate('/error')
     } else {
-      const userRef = databaseRef(database, 'users/' + user.uid)
-      onValue(userRef, snapshot => {
-        setUserData(snapshot.val() as UserData)
-      })
+      if (user) {
+        const userRef = databaseRef(database, 'users/' + user.uid)
+        onValue(userRef, snapshot => {
+          setUserData(snapshot.val() as UserData)
+        })
+      }
     }
   }, [user, navigate])
 
@@ -69,7 +71,7 @@ function Profile() {
           'state_changed',
           () => {
             getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
-              set(databaseRef(database, 'users/' + user.uid), {
+              set(databaseRef(database, 'users/' + user?.uid), {
                 ...userData,
                 profile_picture: downloadURL,
               })
@@ -89,11 +91,12 @@ function Profile() {
     }
     input.click()
   }
+
   return (
     <div className="bg-gray-100 row-span-2 col-span-4 flex flex-col text-center mr-4">
       {userData ? (
         <div>
-          <div className="mx-auto my-2 p-3  rounded-xl">
+          <div className="mx-auto my-2 p-3 rounded-xl">
             <h1 className="text-lg sm:text-2xl">{userData.email}</h1>
             <div>
               <img
@@ -119,7 +122,7 @@ function Profile() {
               onClick={handleUpdateLocations}
             >
               Save Changes
-            </button>{' '}
+            </button>
           </div>
         </div>
       ) : (
