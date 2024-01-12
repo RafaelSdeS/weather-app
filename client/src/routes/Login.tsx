@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../firebase-config'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FirebaseError } from 'firebase/app'
 
 const Login: React.FC = () => {
@@ -89,6 +89,12 @@ const Login: React.FC = () => {
             >
               Log In
             </button>
+
+            <Link to="/register">
+              <button className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md my-2 text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Register
+              </button>
+            </Link>
           </div>
         </form>
         {error && (
